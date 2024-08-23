@@ -20,17 +20,17 @@ To read more about using these font, please visit the Next.js documentation:
 'use client'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useState } from 'react'
 
 export function Component() {
 
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
-  const [metaData, setMetaData] = useState(null)
-  const [error, setError] = useState(null)
-  const [webUrl, setWebUrl] = useState('')
+  const [metaData, setMetaData] = useState<Record<string, any> | null>(null) // Allow metaData to be string or null
+  const [error, setError] = useState<string | null>(null) // Set error to be string or null
+  const [webUrl, setWebUrl] = useState<string | null>(null) // Same for webUrl
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
     setLoading(true)
     setError(null) // Reset any previous errors
@@ -46,7 +46,7 @@ export function Component() {
       } else {
         setError(result.error || "Error fetching data")
       }
-    } catch (error) {
+    } catch (error: any) {
       setError("Failed to make API call: " + error.message)
     } finally {
       setLoading(false)
@@ -105,7 +105,7 @@ export function Component() {
                 <div className="mt-6">
                   <h3 className="text-lg font-medium text-foreground">Key Topics</h3>
                   <ul className="mt-2 space-y-2 text-muted-foreground">
-                    {metaData.key_features.map((feature, index) => (
+                    {metaData.key_features.map((feature: string, index: any) => (
                       <li key={index} className="flex items-start gap-2">
                         <CheckIcon className="w-5 h-5 text-primary" />
                         <span>{feature}</span>
@@ -122,7 +122,7 @@ export function Component() {
   )
 }
 
-function CheckIcon(props) {
+function CheckIcon(props: any) {
   return (
     <svg
       {...props}

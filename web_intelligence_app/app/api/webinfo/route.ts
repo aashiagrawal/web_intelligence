@@ -50,12 +50,12 @@ export async function GET(request: NextRequest) {
         // Return the newly created record
         return NextResponse.json(record);
 
-      } catch (execError) {
+      } catch (execError: any) {
         console.error(`Error executing Python script: ${execError.message}`);
         return NextResponse.json({ error: "Internal server error" }, { status: 500 });
       }
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error handling request:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
