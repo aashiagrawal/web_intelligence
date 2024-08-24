@@ -28,16 +28,23 @@ export async function GET(request: NextRequest) {
     } else {
       // Run the Python scraper as a promise
       try {
-        const { stdout, stderr } = await execPromise(`python3 scraper.py ${webUrl}`);
+        // const { stdout, stderr } = await execPromise(`python3 scraper.py ${webUrl}`);
         
-        if (stderr) {
-          console.error(`Script stderr: ${stderr}`);
-          return NextResponse.json({ error: "Error executing Python script" }, { status: 500 });
-        }
+        // if (stderr) {
+        //   console.error(`Script stderr: ${stderr}`);
+        //   return NextResponse.json({ error: "Error executing Python script" }, { status: 500 });
+        // }
+        // const scrapedData = JSON.parse(stdout);
 
-        const scrapedData = JSON.parse(stdout);
-
+        // const baseUrl = process.env.VERCEL_URL || "http://localhost:3000";
+        // const response = await fetch(`${baseUrl}/api/scraper?url=${encodeURIComponent(webUrl)}`);
+        // const scrapedData = await response.json()
         // Create a new record in the database with the scraped data
+
+        const baseUrl = process.env.VERCEL_URL || "http://localhost:3000";
+        const response = await fetch(`${baseUrl}/api/scraper?url=${encodeURIComponent(webUrl)}`)
+        const scrapedData = await response.json()
+        
         record = await prisma.websiteInfo.create({
           data: {
             url: scrapedData.url,
