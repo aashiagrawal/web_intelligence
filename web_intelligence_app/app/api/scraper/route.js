@@ -302,14 +302,24 @@ async function generateMetaData(url) {
 // Main Next.js API handler
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-  const url = searchParams.get('url');
+  let url = searchParams.get('url');
 
-  if (!url) {
-    return new Response(JSON.stringify({ error: 'A valid URL must be provided' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
+  // if (!url) {
+  //   return new Response(JSON.stringify({ error: 'A valid URL must be provided' }), {
+  //     status: 400,
+  //     headers: { 'Content-Type': 'application/json' },
+  //   });
+  // }
+
+  // // Decode the URL in case it's percent-encoded
+  // try {
+  //   url = decodeURIComponent(url);
+  // } catch (err) {
+  //   return new Response(JSON.stringify({ error: 'Failed to decode URL' }), {
+  //     status: 400,
+  //     headers: { 'Content-Type': 'application/json' },
+  //   });
+  // }
 
   try {
     const res = await generateMetaData(url);
